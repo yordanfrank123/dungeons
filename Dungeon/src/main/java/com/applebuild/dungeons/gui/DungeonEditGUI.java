@@ -44,7 +44,7 @@ public class DungeonEditGUI implements Listener {
     private static final Pattern ALPHANUMERIC_PATTERN = Pattern.compile("^[a-zA-Z0-9 ]+$");
 
     private enum InputType {
-        NAME, SCHEMATIC_NAME
+        NAME // , SCHEMATIC_NAME // REMOVED
     }
 
     public DungeonEditGUI(Player player, DungeonManagementGUI parentGUI, DungeonConfig dungeonConfig) {
@@ -70,8 +70,8 @@ public class DungeonEditGUI implements Listener {
         inventory.setItem(10, createGuiItem(Material.NAME_TAG, "§bNombre: §f" + dungeonConfig.getName(),
                 "§7Clic para cambiar el nombre."));
 
-        inventory.setItem(12, createGuiItem(Material.PAPER, "§bEsquema: §f" + (dungeonConfig.getSchematicName() != null ? dungeonConfig.getSchematicName() : "No definido"),
-                "§7Clic para cambiar el nombre del esquema.", "§7(Ej: my_dungeon_layout)"));
+        // inventory.setItem(12, createGuiItem(Material.PAPER, "§bEsquema: §f" + (dungeonConfig.getSchematicName() != null ? dungeonConfig.getSchematicName() : "No definido"), // REMOVED
+        //         "§7Clic para cambiar el nombre del esquema.", "§7(Ej: my_dungeon_layout)")); // REMOVED
 
         inventory.setItem(14, createGuiItem(Material.COMPASS, "§bSpawn: " + (dungeonConfig.getSpawnLocation() != null ? "§aSeteado" : "§cNo seteado"),
                 "§7Clic para establecer tu ubicación actual", "§7como punto de spawn de la dungeon."));
@@ -155,15 +155,7 @@ public class DungeonEditGUI implements Listener {
             if (plugin.isDebugMode()) {
                 plugin.getLogger().info("[DungeonEditGUI] Player " + player.getName() + " is now waiting for NAME input via chat.");
             }
-        } else if (slot == 12 && type == Material.PAPER) { 
-            closingForChatInput = true;
-            player.closeInventory();
-            waitingForChatInput.put(player.getUniqueId(), this);
-            currentInputType = InputType.SCHEMATIC_NAME;
-            player.sendMessage(Component.text("§bEscribe el nombre del archivo de esquema (ej. 'my_dungeon_layout'). Escribe 'cancelar' para abortar."));
-            if (plugin.isDebugMode()) {
-                plugin.getLogger().info("[DungeonEditGUI] Player " + player.getName() + " is now waiting for SCHEMATIC_NAME input via chat.");
-            }
+        // REMOVED: else if (slot == 12 && type == Material.PAPER) block
         } else if (slot == 14 && type == Material.COMPASS) { 
             dungeonConfig.setSpawnLocation(player.getLocation());
             plugin.getDungeonManager().saveDungeonConfigToFile(dungeonConfig);
@@ -271,14 +263,7 @@ public class DungeonEditGUI implements Listener {
             } else {
                 player.sendMessage(Component.text("§cError: El nombre solo puede contener letras, números y espacios. Intenta de nuevo o escribe 'cancelar'.", NamedTextColor.RED));
             }
-        } else if (guiInstance.currentInputType == InputType.SCHEMATIC_NAME) {
-            if (ALPHANUMERIC_PATTERN.matcher(message).matches()) {
-                guiInstance.dungeonConfig.setSchematicName(message);
-                player.sendMessage(Component.text("§aNombre del esquema establecido a: §f" + message, NamedTextColor.GREEN));
-                inputAccepted = true;
-            } else {
-                player.sendMessage(Component.text("§cError: El nombre del esquema solo puede contener letras, números y espacios. Intenta de nuevo o escribe 'cancelar'.", NamedTextColor.RED));
-            }
+        // REMOVED: else if (guiInstance.currentInputType == InputType.SCHEMATIC_NAME) block
         }
 
         if (inputAccepted) {

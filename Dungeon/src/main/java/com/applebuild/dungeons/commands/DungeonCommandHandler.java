@@ -6,6 +6,7 @@ import com.applebuild.dungeons.DungeonInstanceManager;
 import com.applebuild.dungeons.DungeonManager;
 import com.applebuild.dungeons.gui.DungeonCreationGUI;
 import com.applebuild.dungeons.gui.DungeonManagementGUI;
+import com.applebuild.dungeons.gui.MainDungeonGUI; // Added import
 import com.applebuild.dungeons.gui.ObjectiveListGUI;
 import com.applebuild.dungeons.selection.PlayerSelectionManager; // ¡IMPORTANTE! Añadir esta línea
 import net.kyori.adventure.text.Component;
@@ -46,7 +47,7 @@ public class DungeonCommandHandler implements CommandExecutor, TabCompleter {
         }
 
         if (args.length == 0) {
-            new DungeonManagementGUI(player).open();
+            new MainDungeonGUI(player).open(); // MODIFIED: Was DungeonManagementGUI
             return true;
         }
 

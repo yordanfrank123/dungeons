@@ -65,7 +65,7 @@ public class DungeonManagementGUI implements Listener {
             List<String> lore = new ArrayList<>();
             lore.add("§7ID: §f" + dungeon.getId());
             lore.add("§7Activa: " + (dungeon.isActive() ? "§aSí" : "§cNo"));
-            lore.add("§7Esquema: §f" + (dungeon.getSchematicName() != null ? dungeon.getSchematicName() : "No definido"));
+            // lore.add("§7Esquema: §f" + (dungeon.getSchematicName() != null ? dungeon.getSchematicName() : "No definido")); // REMOVED
             lore.add("§7Spawn: " + (dungeon.getSpawnLocation() != null ? "§aSeteado" : "§cNo seteado"));
             lore.add("§7Región: " + (dungeon.getMinLocation() != null && dungeon.getMaxLocation() != null ? "§aSeteada" : "§cNo seteada"));
             lore.add("");

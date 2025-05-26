@@ -17,14 +17,14 @@ public class DungeonConfig {
     private Location spawnLocation;
     private Location minLocation;
     private Location maxLocation;
-    private String schematicName;
+    // private String schematicName; // REMOVED
     private List<String> objectiveIds;
 
-    public DungeonConfig(String id, String name, String schematicName) {
+    public DungeonConfig(String id, String name) { // schematicName parameter REMOVED
         this.id = id;
         this.name = name;
         this.active = false;
-        this.schematicName = schematicName;
+        // this.schematicName = schematicName; // REMOVED
         this.objectiveIds = new ArrayList<>();
     }
 
@@ -65,7 +65,7 @@ public class DungeonConfig {
             );
         }
 
-        this.schematicName = config.getString("schematicName");
+        // this.schematicName = config.getString("schematicName"); // REMOVED
         this.objectiveIds = config.getStringList("objectiveIds");
     }
 
@@ -113,13 +113,13 @@ public class DungeonConfig {
         this.maxLocation = maxLocation;
     }
 
-    public String getSchematicName() {
-        return schematicName;
-    }
+    // public String getSchematicName() { // REMOVED
+    // return schematicName;
+    // }
 
-    public void setSchematicName(String schematicName) {
-        this.schematicName = schematicName;
-    }
+    // public void setSchematicName(String schematicName) { // REMOVED
+    // this.schematicName = schematicName;
+    // }
 
     public List<String> getObjectiveIds() {
         return new ArrayList<>(objectiveIds);
@@ -169,7 +169,7 @@ public class DungeonConfig {
             config.set("maxLocation", null);
         }
 
-        config.set("schematicName", schematicName);
+        // config.set("schematicName", schematicName); // REMOVED
         config.set("objectiveIds", objectiveIds);
     }
 }

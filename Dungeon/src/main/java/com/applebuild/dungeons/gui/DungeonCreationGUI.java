@@ -33,7 +33,7 @@ public class DungeonCreationGUI implements Listener {
     private final DungeonManagementGUI parentGUI; // Ahora siempre se pasa
 
     private String dungeonName;
-    private String schematicName;
+    // private String schematicName; // REMOVED
 
     private static final Map<UUID, DungeonCreationGUI> waitingForChatInput = new HashMap<>();
     private InputType currentInputType = null;
@@ -42,7 +42,7 @@ public class DungeonCreationGUI implements Listener {
     private static final Pattern ALPHANUMERIC_PATTERN = Pattern.compile("^[a-zA-Z0-9 ]+$");
 
     private enum InputType {
-        NAME, SCHEMATIC_NAME
+        NAME // , SCHEMATIC_NAME // REMOVED
     }
 
     // CORRECCIÓN: El constructor ahora SIEMPRE requiere un parentGUI
@@ -51,7 +51,7 @@ public class DungeonCreationGUI implements Listener {
         this.plugin = CustomDungeons.getPlugin(CustomDungeons.class);
         this.parentGUI = parentGUI; // Asignar el parentGUI
         this.dungeonName = "Nueva Dungeon";
-        this.schematicName = "default";
+        // this.schematicName = "default"; // REMOVED
 
         this.inventory = Bukkit.createInventory(null, 27, Component.text("Crear Nueva Dungeon", NamedTextColor.DARK_AQUA));
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -70,8 +70,8 @@ public class DungeonCreationGUI implements Listener {
         inventory.setItem(10, createGuiItem(Material.NAME_TAG, "§bNombre: §f" + dungeonName,
                 "§7Clic para cambiar el nombre."));
 
-        inventory.setItem(12, createGuiItem(Material.PAPER, "§bEsquema: §f" + schematicName,
-                "§7Clic para cambiar el nombre del esquema.", "§7(Ej: my_dungeon_layout)"));
+        // inventory.setItem(12, createGuiItem(Material.PAPER, "§bEsquema: §f" + schematicName, // REMOVED
+        //         "§7Clic para cambiar el nombre del esquema.", "§7(Ej: my_dungeon_layout)")); // REMOVED
 
         inventory.setItem(22, createGuiItem(Material.LIME_CONCRETE, "§aCrear Dungeon",
                 "§7Haz clic para crear esta", "§7nueva dungeon."));
@@ -142,15 +142,7 @@ public class DungeonCreationGUI implements Listener {
             if (plugin.isDebugMode()) {
                 plugin.getLogger().info("[DungeonCreationGUI] Player " + player.getName() + " is now waiting for NAME input via chat.");
             }
-        } else if (slot == 12 && type == Material.PAPER) { 
-            closingForChatInput = true;
-            player.closeInventory();
-            waitingForChatInput.put(player.getUniqueId(), this);
-            currentInputType = InputType.SCHEMATIC_NAME;
-            player.sendMessage(Component.text("§bEscribe el nombre del archivo de esquema (ej. 'my_dungeon_layout'). Escribe 'cancelar' para abortar."));
-            if (plugin.isDebugMode()) {
-                plugin.getLogger().info("[DungeonCreationGUI] Player " + player.getName() + " is now waiting for SCHEMATIC_NAME input via chat.");
-            }
+        // REMOVED: else if (slot == 12 && type == Material.PAPER) block
         } else if (slot == 22 && type == Material.LIME_CONCRETE) { 
             if (dungeonName == null || dungeonName.trim().isEmpty() || dungeonName.equalsIgnoreCase("Nueva Dungeon")) {
                 player.sendMessage(Component.text("§cPor favor, define un nombre válido para la dungeon antes de crearla.", NamedTextColor.RED));
@@ -162,7 +154,7 @@ public class DungeonCreationGUI implements Listener {
             }
 
             String newId = plugin.getDungeonManager().generateUniqueNumericId();
-            DungeonConfig newDungeon = new DungeonConfig(newId, dungeonName, schematicName);
+            DungeonConfig newDungeon = new DungeonConfig(newId, dungeonName); // schematicName parameter REMOVED
             plugin.getDungeonManager().addDungeonConfig(newId, newDungeon);
 
             player.sendMessage(Component.text("§aDungeon '" + dungeonName + "' creada exitosamente!", NamedTextColor.GREEN));
@@ -214,14 +206,7 @@ public class DungeonCreationGUI implements Listener {
             } else {
                 player.sendMessage(Component.text("§cError: El nombre solo puede contener letras, números y espacios. Intenta de nuevo o escribe 'cancelar'.", NamedTextColor.RED));
             }
-        } else if (guiInstance.currentInputType == InputType.SCHEMATIC_NAME) {
-            if (ALPHANUMERIC_PATTERN.matcher(message).matches()) {
-                guiInstance.schematicName = message;
-                player.sendMessage(Component.text("§aNombre del esquema establecido a: §f" + message, NamedTextColor.GREEN));
-                inputAccepted = true;
-            } else {
-                player.sendMessage(Component.text("§cError: El nombre del esquema solo puede contener letras, números y espacios. Intenta de nuevo o escribe 'cancelar'.", NamedTextColor.RED));
-            }
+        // REMOVED: else if (guiInstance.currentInputType == InputType.SCHEMATIC_NAME) block
         }
 
         if (inputAccepted) {
