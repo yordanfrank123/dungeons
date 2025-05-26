@@ -1,0 +1,5 @@
+# Configuración principal del plugin CustomDungeons
+
+# Activa o desactiva el modo de depuración.
+# Si está en 'true', se mostrarán mensajes de depuración en la consola del servidor.
+debug-mode: false

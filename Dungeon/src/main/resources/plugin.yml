@@ -1,0 +1,16 @@
+name: CustomDungeons
+version: 1.0-SNAPSHOT
+main: com.applebuild.dungeons.CustomDungeons
+api-version: 1.20
+commands:
+  dungeon:
+    description: Comandos principales para el sistema de dungeons.
+    usage: /dungeon
+    permission: customdungeons.use
+permissions:
+  customdungeons.use:
+    description: Permite usar los comandos de dungeon.
+    default: true
+  customdungeons.admin:
+    description: Permite usar los comandos administrativos de dungeon.
+    default: op
